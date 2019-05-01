@@ -14,13 +14,13 @@ public class Main {
     {
         Scanner keyboard = new Scanner(System.in);
 
-        System.out.print("Please enter your choice (1 for converting currencies, 2 for restaurant POS, 3 for exiting): ");
+        System.out.print("1 for converting currencies, 2 for restaurant POS, 3 to exit:");
         String menuChoice = keyboard.next();
 
         while(!(menuChoice.equals("1") || menuChoice.equals("2") || menuChoice.equals("3")))
         {
             System.out.println("Please enter valid choice!!!");
-            System.out.print("Please enter your choice (1 for converting currencies, 2 for restaurant POS, 3 for exiting): ");
+            System.out.print("1 for converting currencies, 2 for restaurant POS, 3 for exiting: ");
             menuChoice = keyboard.next();
         }
 
@@ -31,7 +31,6 @@ public class Main {
         {
             if (menuChoice.equals("1"))
             {
-                System.out.println();
                 exchangeRate();
             }
             else
@@ -40,13 +39,13 @@ public class Main {
                 restaurantPos();
             }
 
-            System.out.print("\nPlease enter your choice (1 for converting currencies, 2 for restaurant POS, 3 for exiting): ");
+            System.out.println("1 for converting currencies, 2 for restaurant POS, 3 for exiting: ");
             menuChoice = keyboard.next();
 
             while(!(menuChoice.equals("1") || menuChoice.equals("2") || menuChoice.equals("3")))
             {
                 System.out.println("Please enter valid choice!!!");
-                System.out.print("Please enter your choice (1 for converting currencies, 2 for restaurant POS, 3 for exiting): ");
+                System.out.println("1 for converting currencies, 2 for restaurant POS, 3 for exiting: ");
                 menuChoice = keyboard.next();
             }
 
@@ -76,8 +75,7 @@ public class Main {
     {
         Scanner keyboard = new Scanner(System.in);
 
-        System.out.print("What currency would like to convert to USD or from USD\n" +
-                "(C for Canadian Dollar, E for Euro, I for Indian Rupee, J for Japanese Yen, M for Mexican Peso, B for British Pound): ");
+        System.out.println("What currency would like to convert to USD or from USD (C for Canadian Dollar, E for Euro, I for Indian Rupee, J for Japanese Yen, M for Mexican Peso, B for British Pound): ");
         String currencyChoice = keyboard.next();
 
         return currencyChoice;
@@ -87,7 +85,7 @@ public class Main {
     {
         Scanner keyboard = new Scanner(System.in);
 
-        System.out.print("Please enter 1 for converting to USD and 2 for converting from USD): ");
+        System.out.println("Please enter 1 for converting to USD and 2 for converting from USD: ");
         int conversionChoice = keyboard.nextInt();
 
         return conversionChoice;
@@ -97,7 +95,7 @@ public class Main {
     {
         Scanner keyboard = new Scanner(System.in);
 
-        System.out.print("Please enter the currency amount: ");
+        System.out.println("Please enter the currency amount: ");
         int currencyAmount = keyboard.nextInt();
 
         return currencyAmount;
