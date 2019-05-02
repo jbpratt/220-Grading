@@ -1,23 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"os"
 	"os/exec"
 )
 
 func main() {
-	cmd := exec.Command("./main")
-	stdin, err := cmd.StdinPipe()
+	exec_c("java", "Assignments/Solutions/test1.java")
+}
+
+func exec_c(program string, args ...string) {
+	cmd := exec.Command(program, args...)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
-	stdout, _ := cmd.StdoutPipe()
-	cmd.Start()
-
-	stdin.Write([]byte("meme\n"))
-	out := make([]byte, 1024)
-	n, _ := stdout.Read(out)
-
-	fmt.Println("out:", string(out[:n]))
 }
