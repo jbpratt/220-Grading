@@ -1,22 +1,28 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
 )
 
 func main() {
-	exec_c("java", "Assignments/Solutions/test1.java")
+	c, err := exec_c("java", "Assignments/Solutions/test1.java")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(c)
 }
 
-func exec_c(program string, args ...string) {
+func exec_c(program string, args ...string) (*exec.Cmd, error) {
 	cmd := exec.Command(program, args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
+	return cmd, nil
 }
