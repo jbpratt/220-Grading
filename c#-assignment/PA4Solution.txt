@@ -1,0 +1,189 @@
+package com.company;
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+	// write your code here
+
+        Scanner keyboard = new Scanner(System.in);
+
+        System.out.print("Enter 1 to encode a file, 2 to decode a file, 3 to do a word count and 4 to exit the system: ");
+        String menuChoice = keyboard.nextLine();
+
+        while (!menuChoice.equals("4"))
+        {
+            if (menuChoice.equals("1"))
+            {
+                System.out.println();
+                encodeFile(keyboard);
+            }
+            else if (menuChoice.equals("2"))
+            {
+                System.out.println();
+                decodeFile(keyboard);
+            }
+            else if (menuChoice.equals("3"))
+            {
+                System.out.println();
+                wordCount(keyboard);
+            }
+            else
+            {
+                System.out.println("Invalid choice");
+                System.out.println();
+            }
+
+            System.out.print("\n\nEnter 1 to encode a file, 2 to decode a file, 3 to do a word count and 4 to exit the system: ");
+            menuChoice = keyboard.nextLine();
+        }
+
+    }
+
+
+    public static void encodeFile(Scanner keyboard) throws IOException
+    {
+        String inputFileName = getInputFileName(keyboard);
+
+        String[] fileLines = new String[100];
+        String[] encodedFileLines = new String[100];
+
+        int countLines = readFileLines(fileLines, inputFileName);
+
+        for (int i = 0; i < countLines; i++)
+        {
+            int lineLength = fileLines[i].length();
+            encodedFileLines[i] = "";
+
+            for (int j = 0; j < lineLength; j++)
+            {
+                char character = fileLines[i].charAt(j);
+                if (character >= 'A' && character <= 'Z')
+                {
+                    if ((char)(character + 13) <= 'Z')
+                        encodedFileLines[i] += (char)(character + 13);
+                    else
+                        encodedFileLines[i] += (char)(character - 13);
+                }
+                else
+                {
+                    encodedFileLines[i] += character;
+                }
+            }
+        }
+
+        String outputFileName = getOutputFileName(keyboard);
+
+        writeFile(encodedFileLines, countLines, outputFileName);
+    }
+
+
+    public static void decodeFile(Scanner keyboard) throws IOException
+    {
+        String inputFileName = getInputFileName(keyboard);
+
+        String[] fileLines = new String[100];
+        String[] decodedFileLines = new String[100];
+
+        int countLines = readFileLines(fileLines, inputFileName);
+
+        for (int i = 0; i < countLines; i++)
+        {
+            int lineLength = fileLines[i].length();
+            decodedFileLines[i] = "";
+
+            for (int j = 0; j < lineLength; j++)
+            {
+                char character = fileLines[i].charAt(j);
+                if (character >= 'A' && character <= 'Z')
+                {
+                    if ((char)(character - 13) >= 'A')
+                        decodedFileLines[i] += (char)(character - 13);
+                    else
+                        decodedFileLines[i] += (char)(character + 13);
+                }
+                else
+                {
+                    decodedFileLines[i] += character;
+                }
+            }
+        }
+
+        String outputFileName = getOutputFileName(keyboard);
+
+        writeFile(decodedFileLines, countLines, outputFileName);
+    }
+
+
+    public static void wordCount(Scanner keyboard) throws IOException
+    {
+        int countWords = 0;
+
+        String inputFileName = getInputFileName(keyboard);
+
+        String[] fileLines = new String[100];
+
+        int countLines = readFileLines(fileLines, inputFileName);
+
+        for (int i = 0; i < countLines; i++)
+        {
+            String[] words = fileLines[i].split(" ");
+            countWords += words.length;
+        }
+
+        System.out.println("There are " + countWords + " words in " + inputFileName);
+    }
+
+
+    public static String getInputFileName(Scanner keyboard)
+    {
+        System.out.print("Enter the name of the file with the data: ");
+        String fileName = keyboard.nextLine();
+
+        return fileName;
+    }
+
+
+    public static int readFileLines(String[] fileLines, String fileName) throws IOException
+    {
+        int count = 0;
+        Scanner inFile = new Scanner(new File(fileName));
+
+        while (inFile.hasNext())
+        {
+            String fileInput = inFile.nextLine();
+            fileLines[count] = fileInput;
+            // System.out.println(fileLines[count]);
+            count++;
+        }
+
+        inFile.close();
+
+        return count;
+    }
+
+
+    public static String getOutputFileName(Scanner keyboard)
+    {
+        System.out.print("Enter the name of the output file: ");
+        String fileName = keyboard.nextLine();
+
+        return fileName;
+    }
+
+
+    public static void writeFile(String[] outputfileLines, int countLines, String outputFileName) throws IOException
+    {
+        PrintWriter outfile = new PrintWriter(outputFileName);
+
+        for (int i = 0; i < countLines; i++)
+        {
+            outfile.println(outputfileLines[i]);
+        }
+
+        outfile.close();
+    }
+
+}
